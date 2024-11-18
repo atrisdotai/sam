@@ -1,112 +1,116 @@
-# Eliza 🤖
+# Sam 🤖 - Autonomous Social Agent Manager
 
-<div align="center">
-  <img src="./docs/static/img/eliza_banner.jpg" alt="Eliza Banner" width="100%" />
-</div>
+
 
 <div align="center">
   
-  📖 [Documentation](https://ai16z.github.io/eliza/) | 🎯 [Examples](https://github.com/thejoven/awesome-eliza)
+  📖 [Documentation](./docs/docs/) | 🎯 [Getting Started](./docs/docs/tasks/task_getting_started.md)
   
 </div>
 
-## ✨ Features
+## ✨ What is Sam?
 
--   🛠️ Full-featured Discord, Twitter and Telegram connectors
--   🔗 Support for every model (Llama, Grok, OpenAI, Anthropic, etc.)
--   👥 Multi-agent and room support
--   📚 Easily ingest and interact with your documents
--   💾 Retrievable memory and document store
--   🚀 Highly extensible - create your own actions and clients
--   ☁️ Supports many models (local Llama, OpenAI, Anthropic, Groq, etc.)
--   📦 Just works!
+Sam is a powerful autonomous agent platform built on top of Eliza, designed specifically for creating and managing sophisticated AI-powered social media presences. It enables the deployment of intelligent, personality-rich agents that can engage authentically across multiple platforms while maintaining consistent character and knowledge.
+
+## 🚀 Key Features
+
+- 🧠 **Advanced AI Integration**
+  - Plug-and-play with custom AI models
+  - RAG-enhanced memory system
+  - Contextual understanding and response generation
+
+- 🎭 **Personality Management**
+  - Deep character customization
+  - Consistent personality across platforms
+  - Goal-oriented behavior system
+
+- 🌐 **Multi-Platform Support**
+  - Twitter/X integration
+  - Discord communities
+  - Telegram channels
+  - Extensible to other platforms
+
+- 📊 **Analytics & Control**
+  - Engagement monitoring
+  - Behavior analytics
+  - Fine-grained control over agent actions
 
 ## 🎯 Use Cases
 
--   🤖 Chatbots
--   🕵️ Autonomous Agents
--   📈 Business Process Handling
--   🎮 Video Game NPCs
--   🧠 Trading
+- 🤖 **AI Influencers**
+  - Create engaging AI personalities
+  - Build and manage follower communities
+  - Generate and share content autonomously
 
-## 🌍 Translations
+- 🎯 **Brand Representatives**
+  - 24/7 brand presence
+  - Consistent brand voice
+  - Automated customer engagement
 
-<details>
-<summary>Available Languages</summary>
-
--   [中文说明](./README_CN.md)
--   [日本語の説明](./README_JA.md)
--   [한국어 설명](./README_KOR.md)
--   [Instructions en français](./README_FR.md)
--   [Instruções em português](./README_PTBR.md)
--   [Türkçe dökümantasyon](./README_TR.md)
-
-</details>
+- 📈 **Community Managers**
+  - Autonomous community moderation
+  - Event coordination
+  - Member engagement
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
--   [Python 2.7+](https://www.python.org/downloads/)
--   [Node.js 22+](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
--   [pnpm](https://pnpm.io/installation)
+- Node.js 23.1.0+
+- pnpm
+- Python 2.7+ (for certain features)
 
-> **Note for Windows Users:** WSL is required
+### Basic Setup
 
-### Edit the .env file
-
-Copy .env.example to .env and fill in the appropriate values
-
+1. Clone and install:
+```bash
+git clone https://github.com/yourusername/sam.git
+cd sam
+pnpm install
 ```
+
+2. Configure your agent:
+```bash
 cp .env.example .env
+# Edit .env with your API keys and configuration
 ```
 
-### Automatically Start Eliza
-
-This will run everything to setup the project and start the bot with the default character.
-
+3. Launch:
 ```bash
-sh scripts/start.sh
+pnpm start --characters="path/to/your/character.json"
 ```
 
-### Edit the character file
+## 📚 Documentation
 
-1. Open `packages/agent/src/character.ts` to modify the default character. Uncomment and edit.
+- [Getting Started Guide](./docs/docs/tasks/task_getting_started.md)
+- [API Reference](./docs/api/index.md)
+- [Configuration Guide](./docs/docs/guides/configuration.md)
 
-2. To load custom characters:
-    - Use `pnpm start --characters="path/to/your/character.json"`
-    - Multiple character files can be loaded simultaneously
+## 🛠 Advanced Features
 
-### Manually Start Eliza
+- **Custom AI Integration**
+  - Bring your own AI model
+  - Custom embedding systems
+  - Specialized training data
 
-```bash
-pnpm i
-pnpm build
-pnpm start
+- **Memory Management**
+  - Long-term memory storage
+  - Context-aware retrieval
+  - Cross-platform memory sharing
 
-# The project iterates fast, sometimes you need to clean the project if you are coming back to the project
-pnpm clean
-```
+- **Action System**
+  - Custom action definitions
+  - Platform-specific behaviors
+  - Advanced interaction patterns
 
-#### Additional Requirements
+## 🤝 Contributing
 
-You may need to install Sharp. If you see an error when starting up, try installing it with the following command:
+We welcome contributions! See our [Contributing Guide](./docs/docs/community/contributing.md) for details.
 
-```
-pnpm install --include=optional sharp
-```
+## 📜 License
 
-### Community & contact
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
--   [GitHub Issues](https://github.com/ai16z/eliza/issues). Best for: bugs you encounter using Eliza, and feature proposals.
--   [Discord](https://discord.gg/ai16z). Best for: sharing your applications and hanging out with the community.
+## 🌟 Acknowledgments
 
-## Contributors
-
-<a href="https://github.com/ai16z/eliza/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ai16z/eliza" />
-</a>
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=ai16z/eliza&type=Date)](https://star-history.com/#ai16z/eliza&Date)
+Built on top of the excellent [Eliza](https://github.com/ai16z/eliza) framework.
