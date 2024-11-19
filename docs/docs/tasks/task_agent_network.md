@@ -114,6 +114,45 @@ interface ModelProviders {
 }
 ```
 
+## Project Generation System
+
+The agent system has been extended to support automatic project generation, specifically for Express.js APIs with TypeScript. This functionality demonstrates the collaborative capabilities of our agent network:
+
+### Agents Involved
+- **PlannerAgent**: Plans the project structure and requirements
+- **DoerAgent**: Implements the planned project structure and generates code
+- **ReviewerAgent**: Reviews the generated project for completeness and quality
+
+### Implementation Details
+- Location: `packages/core/src/scripts/generate-project.ts`
+- Command: `pnpm --filter @sam/core generate [project-name] [output-path]`
+
+### Generated Project Features
+- Full TypeScript support with proper type definitions
+- Express.js server with RESTful API endpoints
+- User management CRUD operations
+- Input validation using express-validator
+- Jest testing setup with supertest
+- Development server with hot reload
+- Production build configuration
+
+### Current Status
+✅ Successfully implemented and tested the following components:
+1. Project generator script
+2. Agent collaboration system
+3. TypeScript configuration
+4. Express.js API endpoints
+5. Testing infrastructure
+
+### Next Steps
+1. Extend generator templates for different project types
+2. Add support for database integration
+3. Implement authentication and authorization
+4. Add API documentation generation
+5. Create more sophisticated agent interactions for complex project requirements
+
+For detailed information about the project generator, see [Project Generator Documentation](../features/project_generator.md).
+
 ## Technical Requirements
 ```json
 {

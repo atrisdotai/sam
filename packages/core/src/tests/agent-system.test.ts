@@ -3,6 +3,8 @@ import { DoerAgent } from '../agents/DoerAgent';
 import { ReviewerAgent } from '../agents/ReviewerAgent';
 import { UUID } from '../types/common';
 import { Task, TaskResult } from '../types/task';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 
 jest.setTimeout(5000);
 
@@ -10,12 +12,16 @@ describe('Agent System', () => {
     let planner: PlannerAgent;
     let doer: DoerAgent;
     let reviewer: ReviewerAgent;
+    const outputDir = path.join(__dirname, '../../../generated');
 
-    beforeEach(() => {
+    beforeEach(async () => {
         console.log('\n=== Setting up new test ===');
         planner = new PlannerAgent('planner-1' as UUID, 'Test Planner');
         doer = new DoerAgent('doer-1' as UUID, 'Test Doer');
         reviewer = new ReviewerAgent('reviewer-1' as UUID, 'Test Reviewer');
+        
+        // Ensure output directory exists
+        await fs.mkdir(outputDir, { recursive: true });
         
         // Set up event listeners to show agent interactions
         planner.on('taskReceived', (task) => {
@@ -44,6 +50,58 @@ describe('Agent System', () => {
         await doer.shutdown();
         await reviewer.shutdown();
         console.log('=== Test cleanup complete ===\n');
+    });
+
+    test('generate complete code file', async () => {
+        console.log('\n Testing code file generation:');
+        
+        // Create a task to generate a data processing utility
+        const task: Task = {
+            id: 'generate-file-123',
+            type: 'coding',
+            data: {
+                description: 'Create a data processing utility',
+                requirements: [
+                    'Function to parse CSV data',
+                    'Function to transform data',
+                    'Function to validate data',
+                    'Export utility functions'
+                ],
+                filename: 'dataUtils.ts',
+                outputPath: outputDir
+            }
+        };
+        
+        console.log('\n1. Planning file structure and implementation...');
+        const planResult = await planner.processTask(task);
+        
+        console.log('\n2. Implementing the code...');
+        const implementationResult = await doer.processTask({
+            ...task,
+            plan: planResult.plan
+        });
+        
+        console.log('\n3. Reviewing implementation...');
+        const reviewResult = await reviewer.processTask({
+            ...task,
+            implementation: implementationResult.result
+        });
+        
+        // If review is good, save the file
+        if (reviewResult.assessment.quality > 0.8) {
+            const filePath = path.join(task.data.outputPath, task.data.filename);
+            await fs.writeFile(filePath, implementationResult.result.code);
+            console.log(`\n Generated file saved to: ${filePath}`);
+            
+            // Read and display the generated file
+            const generatedCode = await fs.readFile(filePath, 'utf8');
+            console.log('\n Generated Code:');
+            console.log(generatedCode);
+        }
+        
+        expect(reviewResult.assessment.quality).toBeGreaterThan(0.8);
+        expect(implementationResult.result.code).toBeDefined();
+        expect(implementationResult.result.success).toBe(true);
     });
 
     test('collaborative task execution', async () => {
@@ -92,6 +150,7 @@ describe('Agent System', () => {
             id: 'feedback-task-123',
             type: 'optimization',
             data: {
+                description: 'Optimize slow function for better performance',
                 code: `
                     function slowFunction(n) {
                         let result = 0;
@@ -131,5 +190,55 @@ describe('Agent System', () => {
         console.log('Optimization Plan:', JSON.stringify(optimizationPlan, null, 2));
         console.log('Implementation:', JSON.stringify(optimizedResult, null, 2));
         console.log('Final Review:', JSON.stringify(finalReview, null, 2));
+    });
+
+    test('generate complete project structure', async () => {
+        console.log('\n📝 Testing project generation:');
+        
+        // Create a task to generate a complete Express.js API project
+        const task: Task = {
+            id: 'generate-project-123',
+            type: 'project',
+            data: {
+                description: 'Create an Express.js API project with TypeScript',
+                requirements: [
+                    'Project structure with src, tests, and docs directories',
+                    'Express.js server with basic routes',
+                    'TypeScript configuration',
+                    'Package.json with dependencies',
+                    'README.md with setup instructions',
+                    'Basic user CRUD API endpoints',
+                    'Jest test setup'
+                ],
+                outputPath: path.join(__dirname, '../../../generated/express-api')
+            }
+        };
+
+        // 1. Planning phase
+        console.log('\n1️⃣ Planning project structure...');
+        const planResult = await planner.processTask(task);
+
+        // 2. Implementation phase
+        console.log('\n2️⃣ Creating project files...');
+        const implementationResult = await doer.processTask({
+            ...task,
+            plan: planResult.plan
+        });
+
+        // 3. Review phase
+        console.log('\n3️⃣ Reviewing project structure...');
+        const reviewResult = await reviewer.processTask({
+            ...task,
+            implementation: implementationResult.result
+        });
+
+        // Ensure the project was created successfully
+        expect(reviewResult.assessment.quality).toBeGreaterThan(0.8);
+        expect(implementationResult.result.success).toBe(true);
+        
+        // Log the project structure
+        console.log('\n📁 Generated Project Structure:');
+        await fs.readdir(task.data.outputPath, { recursive: true })
+            .then(files => console.log(files.map(f => `  ${f}`).join('\n')));
     });
 });

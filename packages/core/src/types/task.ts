@@ -1,7 +1,15 @@
 export interface Task {
     id: string;
-    type: 'coding' | 'optimization' | 'test';
-    data: any;
+    type: 'coding' | 'optimization' | 'test' | 'project';
+    data: {
+        description: string;
+        requirements?: string[];
+        code?: string;
+        goal?: string;
+        filename?: string;
+        outputPath?: string;
+        framework?: string;
+    };
     plan?: {
         steps: Array<{
             id: number;
@@ -21,7 +29,14 @@ export interface Task {
 export interface TaskResult {
     taskId: string;
     status?: 'pending' | 'in_progress' | 'completed' | 'failed';
-    plan?: Task['plan'];
+    plan?: {
+        steps: Array<{
+            id: number;
+            action: string;
+            status: 'pending' | 'in_progress' | 'completed' | 'failed';
+            details?: string;
+        }>;
+    };
     result?: {
         success: boolean;
         code?: string;
