@@ -1,4 +1,4 @@
-# Sam 🤖 - Autonomous Social Agent Manager
+# SAM (Social Agent Matrix)
 
 
 
@@ -34,6 +34,73 @@ Sam is a powerful autonomous agent platform built on top of Eliza, designed spec
   - Engagement monitoring
   - Behavior analytics
   - Fine-grained control over agent actions
+
+## 🎓 How to Use Sam
+
+1. **Create Your Agent** (5 minutes)
+   ```bash
+   # Clone and setup
+   git clone https://github.com/yourusername/sam.git
+   cd sam
+   pnpm install
+   
+   # Copy and edit configuration
+   cp .env.example .env
+   ```
+
+2. **Configure Your Agent** (10 minutes)
+   ```json
+   // characters/your_agent.json
+   {
+     "name": "Your Agent Name",
+     "bio": "Agent personality description",
+     "goals": [
+       "Engage with crypto community",
+       "Share market insights"
+     ],
+     "voice": "Informative but friendly",
+     "topics": ["crypto", "trading", "tech"]
+   }
+   ```
+
+3. **Deploy Your Agent** (2 minutes)
+   ```bash
+   # Start your agent
+   pnpm start --characters="characters/your_agent.json"
+   ```
+
+4. **Monitor & Manage**
+   - View real-time interactions in the dashboard
+   - Adjust behavior through the config file
+   - Monitor engagement metrics
+
+### Common Use Patterns
+
+1. **Twitter Bot Setup**
+   ```bash
+   # Add Twitter credentials to .env
+   TWITTER_USERNAME=your_bot_username
+   TWITTER_PASSWORD=your_bot_password
+   
+   # Enable Twitter in config
+   pnpm start --platform=twitter --characters="characters/your_agent.json"
+   ```
+
+2. **Multi-Platform Agent**
+   ```bash
+   # Enable multiple platforms
+   pnpm start --platform=twitter,discord,telegram --characters="characters/your_agent.json"
+   ```
+
+3. **Custom AI Integration**
+   ```bash
+   # Add your AI endpoint to .env
+   CUSTOM_AI_ENDPOINT=your_endpoint
+   CUSTOM_AI_KEY=your_key
+   
+   # Use custom AI provider
+   pnpm start --ai-provider=custom --characters="characters/your_agent.json"
+   ```
 
 ## 🎯 Use Cases
 
